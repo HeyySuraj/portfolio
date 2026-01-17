@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   title: "Suraj Bhanarkar - Software Engineer",
   description:
     "Software Engineer specializing in full-stack development, creating accessible and performant web applications.",
-  keywords: ["Software Engineer", "Full Stack Developer", "React", "Node.js", "TypeScript", "Web Development"],
+  keywords: ["Software Engineer", "Full Stack Developer", "React", "Node.js", "TypeScript", "Web Development", "Next.js"],
   authors: [{ name: "Suraj Bhanarkar" }],
   creator: "Suraj Bhanarkar",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://surajbhanarkar.dev",
+    url: "https://surajbhanarkar.vercel.app",
     title: "Suraj Bhanarkar - Software Engineer",
     description:
       "Software Engineer specializing in full-stack development, creating accessible and performant web applications.",
