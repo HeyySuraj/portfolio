@@ -1,46 +1,53 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { AnimatedCounter } from "@/components/animated-counter"
+import { ContactForm } from "@/components/contact-form"
+import { CursorEffects } from "@/components/cursor-effects"
+import { FloatingBubbles } from "@/components/floating-bubbles"
+import { FloatingElements } from "@/components/floating-elements"
 import { GlassmorphismPhotoCard } from "@/components/glassmorphism-photo-card"
 import { InteractiveName } from "@/components/interactive-name"
-import { FloatingBubbles } from "@/components/floating-bubbles"
+import { ParallaxBackground } from "@/components/parallax-background"
+import { ScrollProgress } from "@/components/scroll-progress"
+import { SettingsDialog } from "@/components/SettingsComponent"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { LINKS } from "@/constants/links"
 import {
+  Briefcase,
+  Calendar,
+  Code,
+  Coffee,
+  Download,
+  ExternalLink,
+  FileText,
   Github,
   Linkedin,
   Mail,
-  ExternalLink,
-  Code,
-  User,
-  Briefcase,
+  MapPin,
+  MessageCircle,
   Moon,
   Sun,
-  FileText,
-  MessageCircle,
-  Download,
-  MapPin,
-  Calendar,
-  Coffee,
+  User
 } from "lucide-react"
 import { useTheme } from "next-themes"
-import { ContactForm } from "@/components/contact-form"
-import { AnimatedCounter } from "@/components/animated-counter"
-import { ScrollProgress } from "@/components/scroll-progress"
-import { CursorEffects } from "@/components/cursor-effects"
-import { FloatingElements } from "@/components/floating-elements"
-import { ParallaxBackground } from "@/components/parallax-background"
-import { LINKS } from "@/constants/links"
+import { useEffect, useState } from "react"
 
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("about")
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
 
+  // new states
+  const [bubbleEnabled, setBubbleEnabled] = useState(true);
+  const [cursorBubbleEnabled, setCursorBubbleEnabled] = useState(true);
+
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // TODO : Add Certification tab for tcs codevita
 
   const tabs = [
     { id: "about", label: "About", icon: User },
@@ -83,36 +90,36 @@ export default function Portfolio() {
   const experience = [
     {
       title: "Software Development Engineer",
-      company: "Leadows Technologies",
+      company: "Leadows Technologies Pvt. Ltd.",
       period: "09/2023 — Present",
       description:
         "Architected connector API backend application using TypeScript, Express.js, and Adapter design pattern, reducing development time by 50%. Devised interactive dashboards with React, ShadCN UI, and Chart.js, reducing reporting time by 30%. Engineered payment middleware with callback handling and retry mechanisms ensuring 100% availability. Instituted Redis caching reducing database load by 26% and optimized DB indexing improving performance by 10%.",
       skills: ["TypeScript", "Express.js", "React", "Redis", "MongoDB", "NestJS", "Fastify"],
     },
-    {
-      title: "Senior Software Engineer",
-      company: "TechCorp Solutions",
-      period: "2022 — Present",
-      description:
-        "Lead full-stack development for enterprise applications serving 100k+ users. Architect scalable microservices, mentor junior developers, and implement modern React patterns with TypeScript. Reduced application load time by 40% through performance optimization.",
-      skills: ["React", "Node.js", "AWS", "TypeScript", "PostgreSQL"],
-    },
-    {
-      title: "Full Stack Developer",
-      company: "InnovateTech",
-      period: "2020 — 2022",
-      description:
-        "Built and maintained multiple client applications from conception to deployment. Collaborated with cross-functional teams to deliver high-quality software solutions. Implemented CI/CD pipelines and automated testing frameworks.",
-      skills: ["JavaScript", "Python", "MongoDB", "Docker", "Jenkins"],
-    },
-    {
-      title: "Frontend Developer",
-      company: "Digital Solutions Inc",
-      period: "2018 — 2020",
-      description:
-        "Developed responsive web applications and interactive user interfaces. Worked closely with UX/UI designers to implement pixel-perfect designs. Optimized applications for maximum speed and scalability.",
-      skills: ["HTML5", "CSS3", "JavaScript", "React", "Sass"],
-    },
+    // {
+    //   title: "Senior Software Engineer",
+    //   company: "TechCorp Solutions",
+    //   period: "2022 — Present",
+    //   description:
+    //     "Lead full-stack development for enterprise applications serving 100k+ users. Architect scalable microservices, mentor junior developers, and implement modern React patterns with TypeScript. Reduced application load time by 40% through performance optimization.",
+    //   skills: ["React", "Node.js", "AWS", "TypeScript", "PostgreSQL"],
+    // },
+    // {
+    //   title: "Full Stack Developer",
+    //   company: "InnovateTech",
+    //   period: "2020 — 2022",
+    //   description:
+    //     "Built and maintained multiple client applications from conception to deployment. Collaborated with cross-functional teams to deliver high-quality software solutions. Implemented CI/CD pipelines and automated testing frameworks.",
+    //   skills: ["JavaScript", "Python", "MongoDB", "Docker", "Jenkins"],
+    // },
+    // {
+    //   title: "Frontend Developer",
+    //   company: "Digital Solutions Inc",
+    //   period: "2018 — 2020",
+    //   description:
+    //     "Developed responsive web applications and interactive user interfaces. Worked closely with UX/UI designers to implement pixel-perfect designs. Optimized applications for maximum speed and scalability.",
+    //   skills: ["HTML5", "CSS3", "JavaScript", "React", "Sass"],
+    // },
   ]
 
   const skills = [
@@ -172,10 +179,10 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      <FloatingBubbles />
+      {bubbleEnabled && <FloatingBubbles />}
       <ParallaxBackground />
       <FloatingElements />
-      <CursorEffects />
+      {cursorBubbleEnabled && <CursorEffects />}
 
       <ScrollProgress />
 
@@ -234,16 +241,33 @@ export default function Portfolio() {
 
             <div className="hidden lg:flex flex-col items-end gap-4">
               {/* Theme Toggle */}
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="shrink-0 hover:scale-110 transition-transform duration-200"
-              >
-                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-              </Button>
+              <div className="flex gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="shrink-0 hover:scale-110 transition-transform duration-200"
+                >
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  // onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="shrink-0 hover:scale-110 transition-transform duration-200"
+                >
+                  {/* <Settings className="h-[1.2rem] w-[1.2rem]" /> */}
+                  <SettingsDialog
+                    cursorBubbleEnabled={cursorBubbleEnabled}
+                    setCursorBubbleEnabled={setCursorBubbleEnabled}
+                    bubbleEnabled={bubbleEnabled}
+                    setBubbleEnabled={setBubbleEnabled}
+                  />
+                </Button>
+              </div>
 
               <div className="animate-in slide-in-from-right-12 duration-1000 delay-500">
                 <GlassmorphismPhotoCard />
@@ -255,9 +279,14 @@ export default function Portfolio() {
           <div className="mb-8">
             <p className="text-muted-foreground mb-2">
               Currently, I'm a Software Development Engineer at{" "}
-              <span className="text-primary font-medium hover:underline cursor-pointer transition-all duration-200">
-                Leadows Technologies
-              </span>
+              <a
+                href="https://leadows.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium hover:underline cursor-pointer transition-all duration-200"
+              >
+                Leadows Technologies Pvt. Ltd.
+              </a>
               , specializing in backend architecture and full-stack development. I contribute to building scalable
               applications, optimizing database performance, and implementing secure payment systems that serve
               thousands of users daily.
@@ -271,11 +300,10 @@ export default function Portfolio() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 transform ${
-                    activeTab === tab.id
-                      ? "text-foreground border-b-2 border-primary pb-4"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 transform ${activeTab === tab.id
+                    ? "text-foreground border-b-2 border-primary pb-4"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {tab.label}
                 </button>
