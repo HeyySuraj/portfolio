@@ -4,6 +4,7 @@
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)]()
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)]()
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)]()
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=flat&logo=radixui&logoColor=white)]()
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)]()
 
 🚀 **Live Portfolio:** https://surajbhanarkar.vercel.app/  
