@@ -1,12 +1,31 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
+
+const PHOTOS = [
+  "/myphoto1.jpg",
+  "/myphoto2.jpg",
+  // "/myphoto3.jpg",
+  // "/myphoto4.jpg",
+]
 
 export function GlassmorphismPhotoCard() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { theme } = useTheme()
 
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  /* ------------------ AUTO ROTATE PHOTOS ------------------ */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % PHOTOS.length)
+    }, 3000) // change image every 3s
+
+    return () => clearInterval(interval)
+  }, [])
+
+  /* ------------------ CANVAS ANIMATION ------------------ */
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -17,107 +36,78 @@ export function GlassmorphismPhotoCard() {
     canvas.width = 300
     canvas.height = 400
 
-    const bubbles: Array<{
-      x: number
-      y: number
-      radius: number
-      dx: number
-      dy: number
-      opacity: number
-    }> = []
+    const bubbles = Array.from({ length: 8 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 20 + 10,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5,
+      opacity: Math.random() * 0.3 + 0.1,
+    }))
 
-    // Create bubbles
-    for (let i = 0; i < 8; i++) {
-      bubbles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 20 + 10,
-        dx: (Math.random() - 0.5) * 0.5,
-        dy: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.3 + 0.1,
-      })
-    }
+    let animationId: number
 
-    function animate() {
-      if (!ctx || !canvas) return
-
+    const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      bubbles.forEach((bubble) => {
-        // Update position
-        bubble.x += bubble.dx
-        bubble.y += bubble.dy
+      bubbles.forEach((b) => {
+        b.x += b.dx
+        b.y += b.dy
 
-        // Bounce off edges
-        if (bubble.x <= bubble.radius || bubble.x >= canvas.width - bubble.radius) {
-          bubble.dx *= -1
-        }
-        if (bubble.y <= bubble.radius || bubble.y >= canvas.height - bubble.radius) {
-          bubble.dy *= -1
-        }
+        if (b.x <= b.radius || b.x >= canvas.width - b.radius) b.dx *= -1
+        if (b.y <= b.radius || b.y >= canvas.height - b.radius) b.dy *= -1
 
-        // Draw bubble
-        const gradient = ctx.createRadialGradient(bubble.x, bubble.y, 0, bubble.x, bubble.y, bubble.radius)
+        const gradient = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.radius)
 
         if (theme === "dark") {
-          gradient.addColorStop(0, `rgba(147, 197, 253, ${bubble.opacity})`)
-          gradient.addColorStop(1, `rgba(59, 130, 246, ${bubble.opacity * 0.3})`)
+          gradient.addColorStop(0, `rgba(147,197,253,${b.opacity})`)
+          gradient.addColorStop(1, `rgba(59,130,246,${b.opacity * 0.3})`)
         } else {
-          gradient.addColorStop(0, `rgba(59, 130, 246, ${bubble.opacity})`)
-          gradient.addColorStop(1, `rgba(147, 197, 253, ${bubble.opacity * 0.3})`)
+          gradient.addColorStop(0, `rgba(59,130,246,${b.opacity})`)
+          gradient.addColorStop(1, `rgba(147,197,253,${b.opacity * 0.3})`)
         }
 
         ctx.fillStyle = gradient
         ctx.beginPath()
-        ctx.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2)
+        ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2)
         ctx.fill()
       })
 
-      requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate)
     }
 
     animate()
+    return () => cancelAnimationFrame(animationId)
   }, [theme])
 
   return (
     <div className="relative w-72 h-96 rounded-2xl overflow-hidden group">
-      {/* Glassmorphism background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/5 dark:to-white/2 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl"></div>
+      {/* Glass background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/5 dark:to-white/2 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl" />
 
-      {/* Animated bubbles canvas */}
+      {/* Canvas bubbles */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full rounded-2xl"
         style={{ mixBlendMode: theme === "dark" ? "screen" : "multiply" }}
       />
 
-      {/* Photo */}
-      <div className="absolute inset-4 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-        <img
-          src="/Portfolio_Pic.jpg"
-          alt="Suraj Bhanarkar"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </div>
-
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-2xl"></div>
-
-      {/* Floating particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white/40 rounded-full animate-pulse"
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${10 + i * 12}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${2 + i * 0.3}s`,
-            }}
+      {/* PHOTO SLIDER TODO : Add animation that it smooth change  */}
+      <div className="absolute inset-4 rounded-xl overflow-hidden">
+        {PHOTOS.map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt="Suraj Bhanarkar"
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out
+              ${index === currentIndex ? "opacity-100 scale-100" : "opacity-0 scale-105"}
+            `}
           />
         ))}
       </div>
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-2xl" />
     </div>
   )
 }
