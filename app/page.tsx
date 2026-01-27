@@ -64,8 +64,8 @@ export default function Portfolio() {
         "Budget-friendly travel platform with Django framework and PostgreSQL, featuring a curated selection of 500+ destinations. Boosted user satisfaction by 30% with secure online ticketing and facilitated over 50,000 users with intuitive registration and booking features.",
       image: "/modern-ecommerce-interface.png",
       tech: ["Django", "PostgreSQL", "Python", "HTML", "CSS", "JavaScript"],
-      github: LINKS.GITHUB,
-      live: "https://travello-demo.vercel.app",
+      github: `${LINKS.GITHUB}/travello-book-explore`,
+      live: `${LINKS.GITHUB}/travello-book-explore`,
     },
     {
       title: "Vendor Management System",
@@ -73,17 +73,17 @@ export default function Portfolio() {
         "Backend system using Python and Django REST to manage 100+ vendor profiles, track purchase orders, and calculate performance metrics. Features token-based authentication and optimized database interactions handling 10,000+ records efficiently.",
       image: "/task-management-dashboard.png",
       tech: ["Python", "Django REST", "SQLite", "Token Auth", "Django ORM"],
-      github: LINKS.GITHUB,
-      live: "https://vendor-management-demo.vercel.app",
+      github: `${LINKS.GITHUB}/vms`,
+      live: `${LINKS.GITHUB}/vms`,
     },
     {
-      title: "Connector API Backend",
+      title: "Connector API Backend (Spring Boot)",
       description:
-        "Internal tool architected with TypeScript, Express.js, and Adapter design pattern using JSON-driven architecture. Reduced development time by 50% and includes interactive dashboards with real-time insights using React and Chart.js.",
+        "Enterprise-grade backend system built using Java Spring Boot with a clean, modular architecture and design patterns to support multiple external integrations. Designed RESTful APIs with strong validation, exception handling, and scalable service layers. The system significantly reduced integration effort and improved maintainability. I continuously focus on learning new technologies, refining best practices, and evolving the architecture to build more efficient and reliable systems.",
       image: "/preview/project4.png",
-      tech: ["TypeScript", "Express.js", "React", "Chart.js", "ShadCN UI", "Tailwind"],
-      github: LINKS.GITHUB,
-      live: "https://connector-api-demo.vercel.app",
+      tech: ["Java", "Spring Boot", "Spring Data JPA", "REST APIs", "Design Patterns", "MySQL"],
+      github: `${LINKS.GITHUB}/springbootdemo`,
+      live: `${LINKS.GITHUB}/springbootdemo`,
     },
   ]
 
