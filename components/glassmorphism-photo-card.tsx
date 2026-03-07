@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 const PHOTOS = [
   "/myphoto1.jpg",
   "/myphoto2.jpg",
-  "/myphoto3.jpeg",
+  "/myphoto3.png",
   // "/myphoto4.png",
   // "/greengradient.png",
   // "/greenbgpic.png",
