@@ -33,6 +33,8 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { ArrowTopRightOnSquareIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
+
 
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("about")
@@ -146,25 +148,37 @@ export default function Portfolio() {
 
   const blogPosts = [
     {
-      title: "Building Scalable React Applications",
-      excerpt:
-        "Best practices for architecting large-scale React applications with proper state management and component organization.",
-      date: "Dec 15, 2024",
-      readTime: "8 min read",
-    },
-    {
-      title: "Modern JavaScript Patterns",
-      excerpt: "Exploring advanced JavaScript concepts and patterns that every developer should know in 2024.",
-      date: "Nov 28, 2024",
-      readTime: "6 min read",
-    },
-    {
-      title: "Optimizing Web Performance",
-      excerpt: "Comprehensive guide to improving web application performance through various optimization techniques.",
-      date: "Nov 10, 2024",
+      title: "Click & Collide: Detecting Circle Overlaps with JavaScript",
+      excerpt: `Have you ever wondered how games know when two objects collide? Or how graphics apps prevent overlapping shapes? Today, we’re going to explore circle collision detection in JavaScript — and make it interactive! 
+      All you need is a few lines of code and your mouse. Let’s dive in. 🖱️Press enter or click to view image in full size`,
+      date: "July 17, 2025",
       readTime: "10 min read",
+      link: "https://medium.com/@surajbhanarkar08/two-circles-intersecting-in-javascript-9d76ee09b20b",
+      platform: "Medium"
     },
-  ]
+    {
+      title: "Leetcode Blog - Solution of Minimum Number of Days to Make m Bouquets",
+      excerpt:
+        `Here simply searching for our answer(min days) to want to make m bouquets for that we do Binary Search, our ans must exist between the range 1 to max(A) threfore we have l = 1 and r = max(A) left and right pointers`,
+      date: "May 3, 2022",
+      readTime: "5 min read",
+      link: "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/solutions/2003760/python-very-beginners-bianary-search-sol-fqgy/",
+      platform: "Leetcode"
+    },
+    {
+      title: "Merge Sort in JavaScript — Thinking in Two Steps",
+      excerpt:
+        `Merge Sort looks complex only until you reduce it to two repeatable ideas : 
+        1. Break the array until nothing can be broken further.
+        2. Merge things back in the correct order.
+         That’s it. No tricks. No shortcuts.`,
+      date: "Dec 16, 2025",
+      readTime: "6 min read",
+      link: "https://medium.com/@surajbhanarkar08/merge-sort-in-javascript-thinking-in-two-steps-e24a4959c37a",
+      platform: "Medium"
+    },
+
+  ];
 
   const stats = [
     { label: "Years Experience", value: 2, suffix: "+" },
@@ -569,17 +583,47 @@ export default function Portfolio() {
                 {blogPosts.map((post, index) => (
                   <article
                     key={index}
-                    className="group cursor-pointer hover:scale-105 transition-transform duration-200"
+                    className="group hover:scale-105 transition-transform duration-200"
                   >
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
+                          {post.title}
+                        </h3>
+                        <span className="text-xs font-medium px-2 py-1 rounded-full border border-blue-500 text-blue-600">
+                          {post.platform}
+                        </span>
+                      </div>
+                      {/* <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
                         {post.title}
-                      </h3>
+                      </h3> */}
                       <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      {/* <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span>{post.date}</span>
                         <span>{post.readTime}</span>
+                      </div> */}
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <CalendarIcon className="w-4 h-4" />
+                          {post.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <ClockIcon className="w-4 h-4" />
+                          {post.readTime}
+                        </span>
                       </div>
+                      <a
+                        key={index}
+                        href={post.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
+
+                          Read Article
+                          <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+                        </div>
+                      </a>
                     </div>
                   </article>
                 ))}
@@ -707,4 +751,53 @@ export default function Portfolio() {
       </div>
     </div>
   )
+}
+
+
+
+function BlogList() {
+  return (
+    <div className="space-y-8">
+      {blogPosts.map((post, index) => (
+        <a
+          key={index}
+          href={post.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block group p-5 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-800"
+        >
+          <article className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
+                {post.title}
+              </h3>
+              <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900 dark:text-blue-100">
+                {post.platform}
+              </span>
+            </div>
+
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {post.excerpt}
+            </p>
+
+            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1">
+                <CalendarIcon className="w-4 h-4" />
+                {post.date}
+              </span>
+              <span className="flex items-center gap-1">
+                <ClockIcon className="w-4 h-4" />
+                {post.readTime}
+              </span>
+            </div>
+
+            <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
+              Read Article
+              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+            </div>
+          </article>
+        </a>
+      ))}
+    </div>
+  );
 }

@@ -6,8 +6,11 @@ import { useTheme } from "next-themes"
 const PHOTOS = [
   "/myphoto1.jpg",
   "/myphoto2.jpg",
-  // "/myphoto3.jpg",
-  // "/myphoto4.jpg",
+  "/myphoto3.png",
+  // "/myphoto4.png",
+  // "/greengradient.png",
+  // "/greenbgpic.png",
+  // "/greybgpic.png",
 ]
 
 export function GlassmorphismPhotoCard() {
@@ -18,11 +21,12 @@ export function GlassmorphismPhotoCard() {
 
   /* ------------------ AUTO ROTATE PHOTOS ------------------ */
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % PHOTOS.length)
-    }, 3000) // change image every 3s
+    // const interval = setInterval(() => {
+    //   setCurrentIndex((prev) => (prev + 1) % PHOTOS.length)
+    // }, 3000) // change image every 3s
 
-    return () => clearInterval(interval)
+    // return () => clearInterval(interval)
+    setCurrentIndex(Math.floor(Math.random() * 10) % PHOTOS.length)
   }, [])
 
   /* ------------------ CANVAS ANIMATION ------------------ */
