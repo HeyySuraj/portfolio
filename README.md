@@ -35,15 +35,21 @@ The portfolio is designed with **recruiters and hiring managers in mind**, focus
 ![Home Page](https://github.com/user-attachments/assets/209a84f5-a5c1-40ac-9bde-5c71c7282c8d)
 
 ### 💼 Projects Section
-<img width="1706" height="822" alt="image" src="https://github.com/user-attachments/assets/31fc5b4f-e7fe-418e-94ca-226a765e4877" />
+![Projects Section](https://github.com/user-attachments/assets/31fc5b4f-e7fe-418e-94ca-226a765e4877)
+
+<!-- <img width="1706" height="822" alt="image" src="https://github.com/user-attachments/assets/31fc5b4f-e7fe-418e-94ca-226a765e4877" /> -->
 
 
 ### 🧠 Experience & Skills
-<img width="1690" height="781" alt="image" src="https://github.com/user-attachments/assets/dcd55eb9-8c0a-4f38-b1db-2786bef7a55f" />
+![Experience & Skills](https://github.com/user-attachments/assets/dcd55eb9-8c0a-4f38-b1db-2786bef7a55f)
+
+<!-- <img width="1690" height="781" alt="image" src="https://github.com/user-attachments/assets/dcd55eb9-8c0a-4f38-b1db-2786bef7a55f" /> -->
 
 
 ### 📬 Contact Section
-<img width="1889" height="893" alt="image" src="https://github.com/user-attachments/assets/58137663-a88b-45f1-b58c-348aea924baf" />
+![Contact Section](https://github.com/user-attachments/assets/58137663-a88b-45f1-b58c-348aea924baf)
+
+<!-- <img width="1889" height="893" alt="image" src="https://github.com/user-attachments/assets/58137663-a88b-45f1-b58c-348aea924baf" /> -->
 
 
 > Screenshots are taken from the **live deployed application**.

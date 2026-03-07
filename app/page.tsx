@@ -1,46 +1,55 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { AnimatedCounter } from "@/components/animated-counter"
+import { ContactForm } from "@/components/contact-form"
+import { CursorEffects } from "@/components/cursor-effects"
+import { FloatingBubbles } from "@/components/floating-bubbles"
+import { FloatingElements } from "@/components/floating-elements"
 import { GlassmorphismPhotoCard } from "@/components/glassmorphism-photo-card"
 import { InteractiveName } from "@/components/interactive-name"
-import { FloatingBubbles } from "@/components/floating-bubbles"
+import { ParallaxBackground } from "@/components/parallax-background"
+import { ScrollProgress } from "@/components/scroll-progress"
+import { SettingsDialog } from "@/components/SettingsComponent"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { LINKS } from "@/constants/links"
 import {
+  Briefcase,
+  Calendar,
+  Code,
+  Coffee,
+  Download,
+  ExternalLink,
+  FileText,
   Github,
   Linkedin,
   Mail,
-  ExternalLink,
-  Code,
-  User,
-  Briefcase,
+  MapPin,
+  MessageCircle,
   Moon,
   Sun,
-  FileText,
-  MessageCircle,
-  Download,
-  MapPin,
-  Calendar,
-  Coffee,
+  User
 } from "lucide-react"
 import { useTheme } from "next-themes"
-import { ContactForm } from "@/components/contact-form"
-import { AnimatedCounter } from "@/components/animated-counter"
-import { ScrollProgress } from "@/components/scroll-progress"
-import { CursorEffects } from "@/components/cursor-effects"
-import { FloatingElements } from "@/components/floating-elements"
-import { ParallaxBackground } from "@/components/parallax-background"
-import { LINKS } from "@/constants/links"
+import { useEffect, useState } from "react"
+import { ArrowTopRightOnSquareIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
+
 
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("about")
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
 
+  // new states
+  const [bubbleEnabled, setBubbleEnabled] = useState(true);
+  const [cursorBubbleEnabled, setCursorBubbleEnabled] = useState(true);
+
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // TODO : Add Certification tab for tcs codevita
 
   const tabs = [
     { id: "about", label: "About", icon: User },
@@ -57,8 +66,8 @@ export default function Portfolio() {
         "Budget-friendly travel platform with Django framework and PostgreSQL, featuring a curated selection of 500+ destinations. Boosted user satisfaction by 30% with secure online ticketing and facilitated over 50,000 users with intuitive registration and booking features.",
       image: "/modern-ecommerce-interface.png",
       tech: ["Django", "PostgreSQL", "Python", "HTML", "CSS", "JavaScript"],
-      github: LINKS.GITHUB,
-      live: "https://travello-demo.vercel.app",
+      github: `${LINKS.GITHUB}/travello-book-explore`,
+      live: `${LINKS.GITHUB}/travello-book-explore`,
     },
     {
       title: "Vendor Management System",
@@ -66,53 +75,53 @@ export default function Portfolio() {
         "Backend system using Python and Django REST to manage 100+ vendor profiles, track purchase orders, and calculate performance metrics. Features token-based authentication and optimized database interactions handling 10,000+ records efficiently.",
       image: "/task-management-dashboard.png",
       tech: ["Python", "Django REST", "SQLite", "Token Auth", "Django ORM"],
-      github: LINKS.GITHUB,
-      live: "https://vendor-management-demo.vercel.app",
+      github: `${LINKS.GITHUB}/vms`,
+      live: `${LINKS.GITHUB}/vms`,
     },
     {
-      title: "Connector API Backend",
+      title: "Connector API Backend (Spring Boot)",
       description:
-        "Internal tool architected with TypeScript, Express.js, and Adapter design pattern using JSON-driven architecture. Reduced development time by 50% and includes interactive dashboards with real-time insights using React and Chart.js.",
+        "Enterprise-grade backend system built using Java Spring Boot with a clean, modular architecture and design patterns to support multiple external integrations. Designed RESTful APIs with strong validation, exception handling, and scalable service layers. The system significantly reduced integration effort and improved maintainability. I continuously focus on learning new technologies, refining best practices, and evolving the architecture to build more efficient and reliable systems.",
       image: "/preview/project4.png",
-      tech: ["TypeScript", "Express.js", "React", "Chart.js", "ShadCN UI", "Tailwind"],
-      github: LINKS.GITHUB,
-      live: "https://connector-api-demo.vercel.app",
+      tech: ["Java", "Spring Boot", "Spring Data JPA", "REST APIs", "Design Patterns", "MySQL"],
+      github: `${LINKS.GITHUB}/springbootdemo`,
+      live: `${LINKS.GITHUB}/springbootdemo`,
     },
   ]
 
   const experience = [
     {
       title: "Software Development Engineer",
-      company: "Leadows Technologies",
+      company: "Leadows Technologies Pvt. Ltd.",
       period: "09/2023 — Present",
       description:
         "Architected connector API backend application using TypeScript, Express.js, and Adapter design pattern, reducing development time by 50%. Devised interactive dashboards with React, ShadCN UI, and Chart.js, reducing reporting time by 30%. Engineered payment middleware with callback handling and retry mechanisms ensuring 100% availability. Instituted Redis caching reducing database load by 26% and optimized DB indexing improving performance by 10%.",
       skills: ["TypeScript", "Express.js", "React", "Redis", "MongoDB", "NestJS", "Fastify"],
     },
-    {
-      title: "Senior Software Engineer",
-      company: "TechCorp Solutions",
-      period: "2022 — Present",
-      description:
-        "Lead full-stack development for enterprise applications serving 100k+ users. Architect scalable microservices, mentor junior developers, and implement modern React patterns with TypeScript. Reduced application load time by 40% through performance optimization.",
-      skills: ["React", "Node.js", "AWS", "TypeScript", "PostgreSQL"],
-    },
-    {
-      title: "Full Stack Developer",
-      company: "InnovateTech",
-      period: "2020 — 2022",
-      description:
-        "Built and maintained multiple client applications from conception to deployment. Collaborated with cross-functional teams to deliver high-quality software solutions. Implemented CI/CD pipelines and automated testing frameworks.",
-      skills: ["JavaScript", "Python", "MongoDB", "Docker", "Jenkins"],
-    },
-    {
-      title: "Frontend Developer",
-      company: "Digital Solutions Inc",
-      period: "2018 — 2020",
-      description:
-        "Developed responsive web applications and interactive user interfaces. Worked closely with UX/UI designers to implement pixel-perfect designs. Optimized applications for maximum speed and scalability.",
-      skills: ["HTML5", "CSS3", "JavaScript", "React", "Sass"],
-    },
+    // {
+    //   title: "Senior Software Engineer",
+    //   company: "TechCorp Solutions",
+    //   period: "2022 — Present",
+    //   description:
+    //     "Lead full-stack development for enterprise applications serving 100k+ users. Architect scalable microservices, mentor junior developers, and implement modern React patterns with TypeScript. Reduced application load time by 40% through performance optimization.",
+    //   skills: ["React", "Node.js", "AWS", "TypeScript", "PostgreSQL"],
+    // },
+    // {
+    //   title: "Full Stack Developer",
+    //   company: "InnovateTech",
+    //   period: "2020 — 2022",
+    //   description:
+    //     "Built and maintained multiple client applications from conception to deployment. Collaborated with cross-functional teams to deliver high-quality software solutions. Implemented CI/CD pipelines and automated testing frameworks.",
+    //   skills: ["JavaScript", "Python", "MongoDB", "Docker", "Jenkins"],
+    // },
+    // {
+    //   title: "Frontend Developer",
+    //   company: "Digital Solutions Inc",
+    //   period: "2018 — 2020",
+    //   description:
+    //     "Developed responsive web applications and interactive user interfaces. Worked closely with UX/UI designers to implement pixel-perfect designs. Optimized applications for maximum speed and scalability.",
+    //   skills: ["HTML5", "CSS3", "JavaScript", "React", "Sass"],
+    // },
   ]
 
   const skills = [
@@ -139,25 +148,37 @@ export default function Portfolio() {
 
   const blogPosts = [
     {
-      title: "Building Scalable React Applications",
-      excerpt:
-        "Best practices for architecting large-scale React applications with proper state management and component organization.",
-      date: "Dec 15, 2024",
-      readTime: "8 min read",
-    },
-    {
-      title: "Modern JavaScript Patterns",
-      excerpt: "Exploring advanced JavaScript concepts and patterns that every developer should know in 2024.",
-      date: "Nov 28, 2024",
-      readTime: "6 min read",
-    },
-    {
-      title: "Optimizing Web Performance",
-      excerpt: "Comprehensive guide to improving web application performance through various optimization techniques.",
-      date: "Nov 10, 2024",
+      title: "Click & Collide: Detecting Circle Overlaps with JavaScript",
+      excerpt: `Have you ever wondered how games know when two objects collide? Or how graphics apps prevent overlapping shapes? Today, we’re going to explore circle collision detection in JavaScript — and make it interactive! 
+      All you need is a few lines of code and your mouse. Let’s dive in. 🖱️Press enter or click to view image in full size`,
+      date: "July 17, 2025",
       readTime: "10 min read",
+      link: "https://medium.com/@surajbhanarkar08/two-circles-intersecting-in-javascript-9d76ee09b20b",
+      platform: "Medium"
     },
-  ]
+    {
+      title: "Leetcode Blog - Solution of Minimum Number of Days to Make m Bouquets",
+      excerpt:
+        `Here simply searching for our answer(min days) to want to make m bouquets for that we do Binary Search, our ans must exist between the range 1 to max(A) threfore we have l = 1 and r = max(A) left and right pointers`,
+      date: "May 3, 2022",
+      readTime: "5 min read",
+      link: "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/solutions/2003760/python-very-beginners-bianary-search-sol-fqgy/",
+      platform: "Leetcode"
+    },
+    {
+      title: "Merge Sort in JavaScript — Thinking in Two Steps",
+      excerpt:
+        `Merge Sort looks complex only until you reduce it to two repeatable ideas : 
+        1. Break the array until nothing can be broken further.
+        2. Merge things back in the correct order.
+         That’s it. No tricks. No shortcuts.`,
+      date: "Dec 16, 2025",
+      readTime: "6 min read",
+      link: "https://medium.com/@surajbhanarkar08/merge-sort-in-javascript-thinking-in-two-steps-e24a4959c37a",
+      platform: "Medium"
+    },
+
+  ];
 
   const stats = [
     { label: "Years Experience", value: 2, suffix: "+" },
@@ -172,10 +193,10 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      <FloatingBubbles />
+      {bubbleEnabled && <FloatingBubbles />}
       <ParallaxBackground />
       <FloatingElements />
-      <CursorEffects />
+      {cursorBubbleEnabled && <CursorEffects />}
 
       <ScrollProgress />
 
@@ -234,16 +255,33 @@ export default function Portfolio() {
 
             <div className="hidden lg:flex flex-col items-end gap-4">
               {/* Theme Toggle */}
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="shrink-0 hover:scale-110 transition-transform duration-200"
-              >
-                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-              </Button>
+              <div className="flex gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="shrink-0 hover:scale-110 transition-transform duration-200"
+                >
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  // onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="shrink-0 hover:scale-110 transition-transform duration-200"
+                >
+                  {/* <Settings className="h-[1.2rem] w-[1.2rem]" /> */}
+                  <SettingsDialog
+                    cursorBubbleEnabled={cursorBubbleEnabled}
+                    setCursorBubbleEnabled={setCursorBubbleEnabled}
+                    bubbleEnabled={bubbleEnabled}
+                    setBubbleEnabled={setBubbleEnabled}
+                  />
+                </Button>
+              </div>
 
               <div className="animate-in slide-in-from-right-12 duration-1000 delay-500">
                 <GlassmorphismPhotoCard />
@@ -255,9 +293,14 @@ export default function Portfolio() {
           <div className="mb-8">
             <p className="text-muted-foreground mb-2">
               Currently, I'm a Software Development Engineer at{" "}
-              <span className="text-primary font-medium hover:underline cursor-pointer transition-all duration-200">
-                Leadows Technologies
-              </span>
+              <a
+                href="https://leadows.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium hover:underline cursor-pointer transition-all duration-200"
+              >
+                Leadows Technologies Pvt. Ltd.
+              </a>
               , specializing in backend architecture and full-stack development. I contribute to building scalable
               applications, optimizing database performance, and implementing secure payment systems that serve
               thousands of users daily.
@@ -271,11 +314,10 @@ export default function Portfolio() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 transform ${
-                    activeTab === tab.id
-                      ? "text-foreground border-b-2 border-primary pb-4"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`text-sm uppercase tracking-wider transition-all duration-300 hover:scale-105 transform ${activeTab === tab.id
+                    ? "text-foreground border-b-2 border-primary pb-4"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -541,17 +583,47 @@ export default function Portfolio() {
                 {blogPosts.map((post, index) => (
                   <article
                     key={index}
-                    className="group cursor-pointer hover:scale-105 transition-transform duration-200"
+                    className="group hover:scale-105 transition-transform duration-200"
                   >
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
+                          {post.title}
+                        </h3>
+                        <span className="text-xs font-medium px-2 py-1 rounded-full border border-blue-500 text-blue-600">
+                          {post.platform}
+                        </span>
+                      </div>
+                      {/* <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
                         {post.title}
-                      </h3>
+                      </h3> */}
                       <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      {/* <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span>{post.date}</span>
                         <span>{post.readTime}</span>
+                      </div> */}
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <CalendarIcon className="w-4 h-4" />
+                          {post.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <ClockIcon className="w-4 h-4" />
+                          {post.readTime}
+                        </span>
                       </div>
+                      <a
+                        key={index}
+                        href={post.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
+
+                          Read Article
+                          <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+                        </div>
+                      </a>
                     </div>
                   </article>
                 ))}
@@ -679,4 +751,53 @@ export default function Portfolio() {
       </div>
     </div>
   )
+}
+
+
+
+function BlogList() {
+  return (
+    <div className="space-y-8">
+      {blogPosts.map((post, index) => (
+        <a
+          key={index}
+          href={post.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block group p-5 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-800"
+        >
+          <article className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
+                {post.title}
+              </h3>
+              <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900 dark:text-blue-100">
+                {post.platform}
+              </span>
+            </div>
+
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {post.excerpt}
+            </p>
+
+            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1">
+                <CalendarIcon className="w-4 h-4" />
+                {post.date}
+              </span>
+              <span className="flex items-center gap-1">
+                <ClockIcon className="w-4 h-4" />
+                {post.readTime}
+              </span>
+            </div>
+
+            <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
+              Read Article
+              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+            </div>
+          </article>
+        </a>
+      ))}
+    </div>
+  );
 }

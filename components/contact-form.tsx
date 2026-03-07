@@ -2,13 +2,21 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Mail, Send, CheckCircle } from "lucide-react"
+import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
+
+// TODO : So user cant spam in mail section
+
+// # emaijs credentials
+const SERVICE_ID = process.env.NEXT_PUBLIC_YOUR_SERVICE_ID
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_YOUR_TEMPLATE_ID
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_YOUR_PUBLIC_KEY
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -18,17 +26,62 @@ export function ContactForm() {
     email: "",
     subject: "",
     message: "",
-  })
+  });
+
+  const form = useRef()
+
+  const sendEmail = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+
+      const emailParams = {
+        name: formData.name,
+        time: new Date().toLocaleString(),
+        email: formData.email,
+        message: formData.message,
+        title: formData.subject
+      }
+
+      await emailjs
+        .send(`${SERVICE_ID}`, `${TEMPLATE_ID}`, emailParams, {
+          publicKey: `${PUBLIC_KEY}`,
+        })
+
+      return {
+        status: "SUCCESS",
+        message: "Mail Sent Successfully",
+      }
+
+    } catch (err: any) {
+      if (err instanceof EmailJSResponseStatus) {
+        console.log('EMAILJS FAILED...', err);
+        return {
+          status: "FAILED",
+          message: err.text,
+        }
+      }
+      console.log('ERROR', err);
+      return {
+        status: "FAILED",
+        message: err.messsage,
+      }
+    }
+
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
     // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    // await new Promise((resolve) => setTimeout(resolve, 2000))
+    const sendMailResponse = await sendEmail(e);
+
+    if (sendMailResponse.status === "SUCCESS") {
+      setIsSubmitted(true)
+    }
 
     setIsSubmitting(false)
-    setIsSubmitted(true)
 
     // Reset form after 3 seconds
     setTimeout(() => {
@@ -65,7 +118,7 @@ export function ContactForm() {
           <p className="text-muted-foreground">Have a project in mind? Let's discuss how we can work together.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form ref={form} onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
