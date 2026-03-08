@@ -62,6 +62,15 @@ export default function Portfolio() {
 
   const projects = [
     {
+      title: "NBrain AI: Personal Assistant",
+      description:
+        "An AI-powered portfolio assistant that answers questions about my experience, projects, and skills in real time. Built using LLM-based context retrieval with a custom prompt system to provide accurate responses about my background, work, and technologies. Deployed directly on my personal portfolio to create an interactive and intelligent developer profile experience.",
+      image: "/portfolio.png",
+      tech: ["Next.js", "OpenAI API", "JavaScript", "Prompt Engineering", "Vercel"],
+      github: `${LINKS.GITHUB}/portfolio`,
+      live: "https://surajbhanarkar.vercel.app",
+    },
+    {
       title: "Travello: Discover, Book, Explore",
       description:
         "Budget-friendly travel platform with Django framework and PostgreSQL, featuring a curated selection of 500+ destinations. Boosted user satisfaction by 30% with secure online ticketing and facilitated over 50,000 users with intuitive registration and booking features.",
