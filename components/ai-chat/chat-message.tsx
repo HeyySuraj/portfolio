@@ -2,11 +2,12 @@
 
 import { useTheme } from 'next-themes';
 import { CheckCheck } from 'lucide-react';
+import MarkdownRenderer from './markdown-renderer';
 
 /**
  * Chat Message Component
  * Individual message bubble with role-based styling
- * Features smooth animations and glassmorphism effects
+ * Features smooth animations, glassmorphism effects, and markdown support
  */
 interface ChatMessageProps {
     message: {
@@ -58,7 +59,13 @@ export default function ChatMessage({ message, isLast }: ChatMessageProps) {
                             : 'rgba(0, 0, 0, 0.1) 0px 2px 8px',
                 }}
             >
-                <p className="whitespace-pre-wrap">{message.text}</p>
+                {isUser ? (
+                    <p className="whitespace-pre-wrap">{message.text}</p>
+                ) : (
+                    <div className="markdown-content">
+                        <MarkdownRenderer content={message.text} />
+                    </div>
+                )}
 
                 {isUser && isLast && (
                     <div className="flex items-center gap-1 mt-2 justify-end text-xs opacity-70">

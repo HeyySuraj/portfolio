@@ -95,13 +95,22 @@ ${colorConfig
         )
         .join('\n')
 
+    const styleRef = React.useRef<HTMLStyleElement | null>(null)
+
     React.useEffect(() => {
-        const styleElement = document.createElement('style')
-        styleElement.textContent = styles
-        document.head.appendChild(styleElement)
+        if (!styleRef.current) {
+            styleRef.current = document.createElement('style')
+            styleRef.current.textContent = styles
+            document.head.appendChild(styleRef.current)
+        } else {
+            styleRef.current.textContent = styles
+        }
 
         return () => {
-            document.head.removeChild(styleElement)
+            if (styleRef.current) {
+                document.head.removeChild(styleRef.current)
+                styleRef.current = null
+            }
         }
     }, [styles])
 

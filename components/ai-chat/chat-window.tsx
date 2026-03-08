@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes';
 import { ChevronDown, Send, Loader } from 'lucide-react';
 import ChatMessage from './chat-message';
 import ChatInput from './chat-input';
+import SuggestedQuestions from './suggested-questions';
 
 /**
  * Chat Window Component
@@ -49,14 +50,16 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
         return () => element?.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleSendMessage = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!question.trim()) return;
+    const handleSendMessage = async (e?: React.FormEvent, initialQuestion?: string) => {
+        if (e) e.preventDefault();
+
+        const messageText = initialQuestion || question;
+        if (!messageText.trim()) return;
 
         // Add user message
         const userMessage: Message = {
             role: 'user',
-            text: question,
+            text: messageText,
             id: Date.now().toString(),
         };
 
@@ -70,7 +73,7 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ question }),
+                body: JSON.stringify({ question: messageText }),
             });
 
             const data = await res.json();
@@ -158,12 +161,20 @@ export default function ChatWindow({ onClose }: ChatWindowProps) {
                     }}
                 >
                     {messages.length === 0 && (
-                        <div className="flex flex-col items-center justify-center h-full text-center">
-                            <div className="text-5xl mb-4">🤖</div>
-                            <p className="font-semibold text-lg mb-2">Hey there!</p>
-                            <p className="text-sm opacity-70 px-4">
-                                Ask me anything about Suraj's experience, skills, projects, or background.
-                            </p>
+                        <div className="flex flex-col h-full">
+                            <div className="flex-1 flex flex-col items-center justify-center text-center">
+                                <div className="text-5xl mb-4">🤖</div>
+                                <p className="font-semibold text-lg mb-2">Hey there!</p>
+                                <p className="text-sm opacity-70 px-4">
+                                    Ask me anything about Suraj's experience, skills, projects, or background.
+                                </p>
+                            </div>
+                            <SuggestedQuestions
+                                onSelectQuestion={(selectedQuestion) => {
+                                    handleSendMessage(undefined, selectedQuestion);
+                                }}
+                                loading={loading}
+                            />
                         </div>
                     )}
 
