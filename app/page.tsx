@@ -34,6 +34,7 @@ import {
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { ArrowTopRightOnSquareIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
+import ChatWidget from "@/components/ai-chat/chat-widget"
 
 
 export default function Portfolio() {
@@ -749,55 +750,9 @@ export default function Portfolio() {
           </div>
         </footer>
       </div>
+
+      {/* AI Chat Widget */}
+      <ChatWidget />
     </div>
   )
-}
-
-
-
-function BlogList() {
-  return (
-    <div className="space-y-8">
-      {blogPosts.map((post, index) => (
-        <a
-          key={index}
-          href={post.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block group p-5 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-800"
-        >
-          <article className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
-                {post.title}
-              </h3>
-              <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900 dark:text-blue-100">
-                {post.platform}
-              </span>
-            </div>
-
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {post.excerpt}
-            </p>
-
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <CalendarIcon className="w-4 h-4" />
-                {post.date}
-              </span>
-              <span className="flex items-center gap-1">
-                <ClockIcon className="w-4 h-4" />
-                {post.readTime}
-              </span>
-            </div>
-
-            <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
-              Read Article
-              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
-            </div>
-          </article>
-        </a>
-      ))}
-    </div>
-  );
 }
