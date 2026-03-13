@@ -191,7 +191,7 @@ export default function Portfolio() {
   ];
 
   const stats = [
-    { label: "Years Experience", value: 2, suffix: "+" },
+    { label: "Years Experience", value: 3, suffix: "+" },
     { label: "Projects Completed", value: 15, suffix: "+" },
     { label: "TCS CodeVita Rank (Top 1%)", value: 1225, suffix: "" },
     { label: "Code Commits", value: 500, suffix: "+" },
@@ -472,7 +472,7 @@ export default function Portfolio() {
               <div>
                 <h2 className="text-2xl font-bold mb-2">Timeline</h2>
                 <p className="text-muted-foreground">
-                  2+ years of building seamless software solutions and optimizing development processes.
+                  3+ years of building seamless software solutions and optimizing development processes.
                 </p>
               </div>
 
