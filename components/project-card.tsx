@@ -28,35 +28,44 @@ export default function ProjectCard({
 }: ProjectCardProps) {
     const { theme } = useTheme();
     const cardRef = useRef<HTMLDivElement>(null);
+    const frame = useRef<number | null>(null);
+
     const [tilt, setTilt] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
-    // Check if device is mobile
+    // Detect mobile
     useEffect(() => {
         const checkMobile = () => {
             setIsMobile(window.matchMedia('(max-width: 768px)').matches);
         };
+
         checkMobile();
         window.addEventListener('resize', checkMobile);
+
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (isMobile || !cardRef.current) return;
 
-        const rect = cardRef.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+        if (frame.current) cancelAnimationFrame(frame.current);
 
-        // Calculate tilt angles based on mouse position
-        const rotateY = ((e.clientX - centerX) / rect.width) * 25; // Max 25 degrees
-        const rotateX = ((centerY - e.clientY) / rect.height) * 25; // Max 25 degrees
+        frame.current = requestAnimationFrame(() => {
+            const rect = cardRef.current!.getBoundingClientRect();
 
-        setTilt({ x: rotateX, y: rotateY });
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const rotateY = ((e.clientX - centerX) / rect.width) * 25;
+            const rotateX = ((centerY - e.clientY) / rect.height) * 25;
+
+            setTilt({ x: rotateX, y: rotateY });
+        });
     };
 
     const handleMouseLeave = () => {
+        if (frame.current) cancelAnimationFrame(frame.current);
         setTilt({ x: 0, y: 0 });
         setIsHovering(false);
     };
@@ -78,11 +87,9 @@ export default function ProjectCard({
             className="h-full"
         >
             <Card
-                className={`
-          group h-full overflow-hidden border-0 bg-card/50 
-          transition-all duration-300 cursor-pointer relative
-          ${!isMobile ? 'hover:shadow-2xl' : ''}
-        `}
+                className={`group h-full overflow-hidden border-0 bg-card/50 transition-all duration-300 cursor-pointer relative ${
+                    !isMobile ? 'hover:shadow-2xl' : ''
+                }`}
                 style={{
                     transform: isMobile
                         ? 'none'
@@ -93,108 +100,96 @@ export default function ProjectCard({
               ${isHovering ? 'scale(1.05) translateZ(20px)' : 'scale(1)'}
             `,
                     transformStyle: 'preserve-3d',
-                    transition: 'all 0.1s ease-out',
+                    transition: 'transform 0.15s ease-out',
+                    willChange: 'transform',
                 }}
             >
-                {/* Animated gradient border on hover */}
+                {/* Gradient border */}
                 <div
-                    className={`
-            absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300
-            ${isHovering && !isMobile ? 'opacity-100' : 'opacity-0'}
-            pointer-events-none
-          `}
+                    className={`absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 ${
+                        isHovering && !isMobile ? 'opacity-100' : 'opacity-0'
+                    } pointer-events-none`}
                     style={{
-                        background: theme === 'dark'
-                            ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(139, 92, 246, 0.2) 100%)'
-                            : 'linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(139, 92, 246, 0.15) 100%)',
+                        background:
+                            theme === 'dark'
+                                ? 'linear-gradient(135deg, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.2) 100%)'
+                                : 'linear-gradient(135deg, rgba(99,102,241,0.3) 0%, rgba(139,92,246,0.15) 100%)',
                         padding: '1px',
                     }}
                 />
 
-                {/* Glow effect */}
+                {/* Glow */}
                 <div
-                    className={`
-            absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300
-            blur-xl pointer-events-none
-            ${isHovering && !isMobile ? 'opacity-100' : 'opacity-0'}
-          `}
+                    className={`absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 blur-xl pointer-events-none ${
+                        isHovering && !isMobile ? 'opacity-100' : 'opacity-0'
+                    }`}
                     style={{
-                        background: theme === 'dark'
-                            ? 'radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%)'
-                            : 'radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%)',
+                        background:
+                            theme === 'dark'
+                                ? 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)'
+                                : 'radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)',
                     }}
                 />
 
-                {/* Image Section */}
+                {/* Image */}
                 <div className="relative aspect-video overflow-hidden bg-muted">
                     <img
                         src={image || '/placeholder.svg'}
                         alt={title}
-                        className={`
-              w-full h-full object-cover transition-transform duration-500
-              ${isHovering ? 'scale-110' : 'scale-100'}
-            `}
+                        className={`w-full h-full object-cover transition-transform duration-500 ${
+                            isHovering ? 'scale-110' : 'scale-100'
+                        }`}
                     />
 
-                    {/* Image overlay on hover */}
                     <div
-                        className={`
-              absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40
-              transition-opacity duration-300
-              ${isHovering && !isMobile ? 'opacity-100' : 'opacity-0'}
-            `}
+                        className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40 transition-opacity duration-300 ${
+                            isHovering && !isMobile ? 'opacity-100' : 'opacity-0'
+                        }`}
                     />
                 </div>
 
-                {/* Content Section */}
+                {/* Content */}
                 <CardContent className="relative p-6 space-y-4">
                     <div>
                         <h3
-                            className={`
-                text-lg font-semibold mb-2 transition-colors duration-200
-                ${isHovering ? 'text-primary' : 'text-foreground'}
-              `}
+                            className={`text-lg font-semibold mb-2 transition-colors duration-200 ${
+                                isHovering ? 'text-primary' : 'text-foreground'
+                            }`}
                         >
                             {title}
                         </h3>
+
                         <p className="text-muted-foreground text-sm leading-relaxed">
                             {description}
                         </p>
                     </div>
 
-                    {/* Tech Stack Badges */}
+                    {/* Tech stack */}
                     <div className="flex flex-wrap gap-2">
                         {tech.map((techItem) => (
                             <Badge
                                 key={techItem}
                                 variant="secondary"
-                                className={`
-                  text-xs transition-all duration-200 cursor-default
-                  ${isHovering ? 'scale-110 shadow-md' : 'scale-100'}
-                `}
+                                className={`text-xs transition-all duration-200 cursor-default ${
+                                    isHovering ? 'scale-110 shadow-md' : 'scale-100'
+                                }`}
                             >
                                 {techItem}
                             </Badge>
                         ))}
                     </div>
 
-                    {/* Action Buttons */}
+                    {/* Buttons */}
                     <div className="flex gap-3 pt-4">
                         <Button
                             variant="outline"
                             size="sm"
                             asChild
-                            className={`
-                text-xs bg-transparent transition-all duration-200
-                ${isHovering ? 'scale-110 shadow-lg' : 'scale-100'}
-              `}
+                            className={`text-xs bg-transparent transition-all duration-200 ${
+                                isHovering ? 'scale-110 shadow-lg' : 'scale-100'
+                            }`}
                         >
-                            <a
-                                href={github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="View on GitHub"
-                            >
+                            <a href={github} target="_blank" rel="noopener noreferrer">
                                 <Github className="h-4 w-4 mr-1" />
                                 Code
                             </a>
@@ -203,20 +198,13 @@ export default function ProjectCard({
                         <Button
                             size="sm"
                             asChild
-                            className={`
-                transition-all duration-200
-                ${isHovering
+                            className={`transition-all duration-200 ${
+                                isHovering
                                     ? 'scale-110 shadow-lg bg-primary text-primary-foreground'
                                     : 'scale-100 bg-primary/80 text-primary-foreground'
-                                }
-              `}
+                            }`}
                         >
-                            <a
-                                href={live}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="View Live Demo"
-                            >
+                            <a href={live} target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="h-4 w-4 mr-1" />
                                 Live Demo
                             </a>
