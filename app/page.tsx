@@ -35,6 +35,7 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { ArrowTopRightOnSquareIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
 import ChatWidget from "@/components/ai-chat/chat-widget"
+import ProjectCard from "@/components/project-card"
 
 
 export default function Portfolio() {
@@ -532,63 +533,16 @@ export default function Portfolio() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {projects.map((project, index) => (
-                  <Card
+                  <ProjectCard
                     key={index}
-                    className="group overflow-hidden border-0 bg-card/50 hover:bg-card hover:scale-105 transition-all duration-300"
-                  >
-                    <div className="aspect-video overflow-hidden bg-muted">
-                      <img
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-                    <CardContent className="p-6 space-y-4">
-                      <div>
-                        <h3 className="text-lg font-medium mb-2 group-hover:text-primary transition-colors duration-200">
-                          {project.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
-                      </div>
-
-                      <div className="flex flex-wrap gap-1">
-                        {project.tech.map((tech) => (
-                          <Badge
-                            key={tech}
-                            variant="secondary"
-                            className="text-xs hover:scale-105 transition-transform duration-200 cursor-default"
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-3 pt-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                          className="text-xs bg-transparent hover:scale-105 transition-transform duration-200"
-                        >
-                          <a href={project.github} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-3 w-3 mr-1" />
-                            Code
-                          </a>
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                          className="text-xs bg-transparent hover:scale-105 transition-transform duration-200"
-                        >
-                          <a href={project.live} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-3 w-3 mr-1" />
-                            Live Demo
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    title={project.title}
+                    description={project.description}
+                    image={project.image}
+                    tech={project.tech}
+                    github={project.github}
+                    live={project.live}
+                    index={index}
+                  />
                 ))}
               </div>
             </div>

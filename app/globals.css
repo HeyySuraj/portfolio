@@ -533,3 +533,15 @@
 .animate-slide-in-from-bottom-2 {
   animation: slide-in-from-bottom-2 0.3s ease-out;
 }
+
+/* Project Card Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
