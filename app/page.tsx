@@ -36,6 +36,7 @@ import { useEffect, useState } from "react"
 import { ArrowTopRightOnSquareIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
 import ChatWidget from "@/components/ai-chat/chat-widget"
 import ProjectCard from "@/components/project-card"
+import TiltCard from "@/components/tilt-card"
 
 
 export default function Portfolio() {
@@ -307,7 +308,9 @@ export default function Portfolio() {
               </div>
 
               <div className="animate-in slide-in-from-right-12 duration-1000 delay-500">
-                <GlassmorphismPhotoCard />
+                <TiltCard>
+                  <GlassmorphismPhotoCard />
+                </TiltCard>
               </div>
             </div>
           </div>
