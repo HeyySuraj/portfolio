@@ -35,6 +35,8 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { ArrowTopRightOnSquareIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
 import ChatWidget from "@/components/ai-chat/chat-widget"
+import ProjectCard from "@/components/project-card"
+import TiltCard from "@/components/tilt-card"
 
 
 export default function Portfolio() {
@@ -187,11 +189,23 @@ export default function Portfolio() {
       link: "https://medium.com/@surajbhanarkar08/merge-sort-in-javascript-thinking-in-two-steps-e24a4959c37a",
       platform: "Medium"
     },
+    {
+      title: "The Art of Debounce in JavaScript (What SDE-2 Interviewers Actually Expect)",
+      excerpt:
+        `If you have ever worked with search bars, scroll events, or resize listeners, you have probably heard about debouncing.
+        But here is the truth.
+        Most developers know the basic debounce implementation.
+        Very few understand the production-level debounce that interviewers expect from an SDE-2 engineer.`,
+      date: "March 15, 2026",
+      readTime: "6 min read",
+      link: "https://medium.com/@surajbhanarkar08/the-art-of-debounce-in-javascript-what-sde-2-interviewers-actually-expect-a004d261ede1",
+      platform: "Medium"
+    },
 
   ];
 
   const stats = [
-    { label: "Years Experience", value: 2, suffix: "+" },
+    { label: "Years Experience", value: 3, suffix: "+" },
     { label: "Projects Completed", value: 15, suffix: "+" },
     { label: "TCS CodeVita Rank (Top 1%)", value: 1225, suffix: "" },
     { label: "Code Commits", value: 500, suffix: "+" },
@@ -245,21 +259,26 @@ export default function Portfolio() {
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4 animate-in slide-in-from-left-2 duration-1000 delay-900">
-                <Button asChild className="hover:scale-105 transition-transform duration-200">
-                  <a href="#contact" onClick={() => setActiveTab("contact")}>
-                    Get In Touch
-                  </a>
-                </Button>
-                <Button
-                  variant="outline"
-                  asChild
-                  className="hover:scale-105 transition-transform duration-200 bg-transparent"
-                >
-                  <a href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download Resume
-                  </a>
-                </Button>
+                <TiltCard>
+                  <Button asChild className="hover:scale-105 transition-transform duration-200">
+                    <a href="#contact" onClick={() => setActiveTab("contact")}>
+                      Get In Touch
+                    </a>
+                  </Button>
+                </TiltCard>
+
+                <TiltCard>
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="hover:scale-105 transition-transform duration-200 bg-transparent"
+                  >
+                    <a href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
+                      <Download className="h-4 w-4 mr-2" />
+                      Download Resume
+                    </a>
+                  </Button>
+                </TiltCard>
               </div>
             </div>
 
@@ -294,7 +313,9 @@ export default function Portfolio() {
               </div>
 
               <div className="animate-in slide-in-from-right-12 duration-1000 delay-500">
-                <GlassmorphismPhotoCard />
+                <TiltCard>
+                  <GlassmorphismPhotoCard />
+                </TiltCard>
               </div>
             </div>
           </div>
@@ -472,7 +493,7 @@ export default function Portfolio() {
               <div>
                 <h2 className="text-2xl font-bold mb-2">Timeline</h2>
                 <p className="text-muted-foreground">
-                  2+ years of building seamless software solutions and optimizing development processes.
+                  3+ years of building seamless software solutions and optimizing development processes.
                 </p>
               </div>
 
@@ -520,63 +541,16 @@ export default function Portfolio() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {projects.map((project, index) => (
-                  <Card
+                  <ProjectCard
                     key={index}
-                    className="group overflow-hidden border-0 bg-card/50 hover:bg-card hover:scale-105 transition-all duration-300"
-                  >
-                    <div className="aspect-video overflow-hidden bg-muted">
-                      <img
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-                    <CardContent className="p-6 space-y-4">
-                      <div>
-                        <h3 className="text-lg font-medium mb-2 group-hover:text-primary transition-colors duration-200">
-                          {project.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
-                      </div>
-
-                      <div className="flex flex-wrap gap-1">
-                        {project.tech.map((tech) => (
-                          <Badge
-                            key={tech}
-                            variant="secondary"
-                            className="text-xs hover:scale-105 transition-transform duration-200 cursor-default"
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-3 pt-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                          className="text-xs bg-transparent hover:scale-105 transition-transform duration-200"
-                        >
-                          <a href={project.github} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-3 w-3 mr-1" />
-                            Code
-                          </a>
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                          className="text-xs bg-transparent hover:scale-105 transition-transform duration-200"
-                        >
-                          <a href={project.live} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-3 w-3 mr-1" />
-                            Live Demo
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    title={project.title}
+                    description={project.description}
+                    image={project.image}
+                    tech={project.tech}
+                    github={project.github}
+                    live={project.live}
+                    index={index}
+                  />
                 ))}
               </div>
             </div>
@@ -591,51 +565,53 @@ export default function Portfolio() {
 
               <div className="space-y-8">
                 {blogPosts.map((post, index) => (
-                  <article
-                    key={index}
-                    className="group hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
-                          {post.title}
-                        </h3>
-                        <span className="text-xs font-medium px-2 py-1 rounded-full border border-blue-500 text-blue-600">
-                          {post.platform}
-                        </span>
-                      </div>
-                      {/* <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
+                  <TiltCard>
+                    <article
+                      key={index}
+                    // className="group hover:scale-105 transition-transform duration-200"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
+                            {post.title}
+                          </h3>
+                          <span className="text-xs font-medium px-2 py-1 rounded-full border border-blue-500 text-blue-600">
+                            {post.platform}
+                          </span>
+                        </div>
+                        {/* <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
                         {post.title}
                       </h3> */}
-                      <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
-                      {/* <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
+                        {/* <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span>{post.date}</span>
                         <span>{post.readTime}</span>
                       </div> */}
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <CalendarIcon className="w-4 h-4" />
-                          {post.date}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ClockIcon className="w-4 h-4" />
-                          {post.readTime}
-                        </span>
-                      </div>
-                      <a
-                        key={index}
-                        href={post.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
-
-                          Read Article
-                          <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <CalendarIcon className="w-4 h-4" />
+                            {post.date}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <ClockIcon className="w-4 h-4" />
+                            {post.readTime}
+                          </span>
                         </div>
-                      </a>
-                    </div>
-                  </article>
+                        <a
+                          key={index}
+                          href={post.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
+
+                            Read Article
+                            <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+                          </div>
+                        </a>
+                      </div>
+                    </article>
+                  </TiltCard>
                 ))}
               </div>
 
@@ -730,7 +706,9 @@ export default function Portfolio() {
                   </div>
 
                   <div>
-                    <ContactForm />
+                    <TiltCard>
+                      <ContactForm />
+                    </TiltCard>
                   </div>
                 </div>
               </div>
