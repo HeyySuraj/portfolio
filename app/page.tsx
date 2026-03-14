@@ -187,6 +187,18 @@ export default function Portfolio() {
       link: "https://medium.com/@surajbhanarkar08/merge-sort-in-javascript-thinking-in-two-steps-e24a4959c37a",
       platform: "Medium"
     },
+    {
+      title: "The Art of Debounce in JavaScript (What SDE-2 Interviewers Actually Expect)",
+      excerpt:
+        `If you have ever worked with search bars, scroll events, or resize listeners, you have probably heard about debouncing.
+        But here is the truth.
+        Most developers know the basic debounce implementation.
+        Very few understand the production-level debounce that interviewers expect from an SDE-2 engineer.`,
+      date: "March 15, 2026",
+      readTime: "6 min read",
+      link: "https://medium.com/@surajbhanarkar08/the-art-of-debounce-in-javascript-what-sde-2-interviewers-actually-expect-a004d261ede1",
+      platform: "Medium"
+    },
 
   ];
 
