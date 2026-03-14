@@ -259,21 +259,26 @@ export default function Portfolio() {
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4 animate-in slide-in-from-left-2 duration-1000 delay-900">
-                <Button asChild className="hover:scale-105 transition-transform duration-200">
-                  <a href="#contact" onClick={() => setActiveTab("contact")}>
-                    Get In Touch
-                  </a>
-                </Button>
-                <Button
-                  variant="outline"
-                  asChild
-                  className="hover:scale-105 transition-transform duration-200 bg-transparent"
-                >
-                  <a href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download Resume
-                  </a>
-                </Button>
+                <TiltCard>
+                  <Button asChild className="hover:scale-105 transition-transform duration-200">
+                    <a href="#contact" onClick={() => setActiveTab("contact")}>
+                      Get In Touch
+                    </a>
+                  </Button>
+                </TiltCard>
+
+                <TiltCard>
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="hover:scale-105 transition-transform duration-200 bg-transparent"
+                  >
+                    <a href={LINKS.RESUME} target="_blank" rel="noopener noreferrer">
+                      <Download className="h-4 w-4 mr-2" />
+                      Download Resume
+                    </a>
+                  </Button>
+                </TiltCard>
               </div>
             </div>
 
@@ -560,51 +565,53 @@ export default function Portfolio() {
 
               <div className="space-y-8">
                 {blogPosts.map((post, index) => (
-                  <article
-                    key={index}
-                    className="group hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
-                          {post.title}
-                        </h3>
-                        <span className="text-xs font-medium px-2 py-1 rounded-full border border-blue-500 text-blue-600">
-                          {post.platform}
-                        </span>
-                      </div>
-                      {/* <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
+                  <TiltCard>
+                    <article
+                      key={index}
+                    // className="group hover:scale-105 transition-transform duration-200"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-200">
+                            {post.title}
+                          </h3>
+                          <span className="text-xs font-medium px-2 py-1 rounded-full border border-blue-500 text-blue-600">
+                            {post.platform}
+                          </span>
+                        </div>
+                        {/* <h3 className="text-lg font-medium group-hover:text-primary transition-colors duration-200">
                         {post.title}
                       </h3> */}
-                      <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
-                      {/* <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
+                        {/* <div className="flex items-center gap-4 text-xs text-muted-foreground">
                         <span>{post.date}</span>
                         <span>{post.readTime}</span>
                       </div> */}
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <CalendarIcon className="w-4 h-4" />
-                          {post.date}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ClockIcon className="w-4 h-4" />
-                          {post.readTime}
-                        </span>
-                      </div>
-                      <a
-                        key={index}
-                        href={post.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
-
-                          Read Article
-                          <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <CalendarIcon className="w-4 h-4" />
+                            {post.date}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <ClockIcon className="w-4 h-4" />
+                            {post.readTime}
+                          </span>
                         </div>
-                      </a>
-                    </div>
-                  </article>
+                        <a
+                          key={index}
+                          href={post.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="mt-2 flex items-center gap-1 text-primary font-medium text-sm group-hover:underline">
+
+                            Read Article
+                            <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+                          </div>
+                        </a>
+                      </div>
+                    </article>
+                  </TiltCard>
                 ))}
               </div>
 
@@ -699,7 +706,9 @@ export default function Portfolio() {
                   </div>
 
                   <div>
-                    <ContactForm />
+                    <TiltCard>
+                      <ContactForm />
+                    </TiltCard>
                   </div>
                 </div>
               </div>
